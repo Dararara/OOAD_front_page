@@ -1,0 +1,47 @@
+@charset "UTF-8";
+caption{
+    font-size: 36px;
+    font-style: italic;
+    text-align: center;
+    color: #000000;
+    caption-side: top;
+    
+}
+thead{
+    font-size: 12px;
+    background-color: lightgray;
+    text-align: center;
+}
+tbody{
+    text-align: center;
+}
+th{
+    text-align: center;
+}
+td{
+    text-align: center;
+}
+
+#main_table{
+    
+    border-style:solid;
+    border-color: #ffffff;
+    border-width:20px;
+}
+button{
+    display:block;
+    margin:0 auto;
+}
+#myModal{
+    width:auto;
+    height: auto;
+}
+.form-control-xxx {
+    width:8%;
+    display:inline;
+}
+h4{
+    align-content: center;
+    align-self: center;
+    align-items: center;
+}

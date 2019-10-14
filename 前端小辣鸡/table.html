@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>SUSTech Parking Record</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="bootstrap.min.css">  
+	<script src="jquery.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+
+
+	<script type="text/javascript" src="table.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="table.css">
+</head>
+<body onload="initial()">
+	<div id="main_table">
+		<table class="table table-striped table-bordered table-condensed">
+			<caption>SUSTech Parking Record</caption>
+			<thead>
+				<tr>
+					<th nowrap>License Plate Number</th>
+					<th nowrap>Entrance Number</th>
+					<th nowrap>Date</th>
+					<th nowrap>Arrival Time</th>
+					<th nowrap>Departure Time</th>
+					<th nowrap>Staff Name</th>
+					<th nowrap>Staff Number</th>
+					<th nowrap>Status</th>
+					<th nowrap>Delete</th>
+				</tr>
+			</thead>
+			<tbody id="tbody" style="display: none">
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>
+						<input type="button" value="Delete" onclick="removeRow(this)">
+					</td>
+
+				</tr>
+				
+			</tbody>
+		</table>
+		<div style="text-align:center">
+				<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add a Record</button>                   
+		</div>	
+	</div>
+
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="width: 660px" >
+		<div class="modal-content">
+			<div class="modal-header" >
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">
+					Create a Parking Record
+				</h4>
+			</div>
+
+
+
+			<div class="modal-body"style="height: 512px;">
+					
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label style="text-align:right" for="firstname" class="col-sm-5 control-label">License Plate Number: 粤B</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="license_number" placeholder="please input license plate number">
+						</div>
+					</div>
+					<div class="form-group">
+						<label style="text-align:right" for="lastname" class="col-sm-5 control-label">Entrance Number: </label>
+						<div class="col-sm-7">
+							<input type="int" class="form-control" id="entrance_number" placeholder="Please input entrance number: 0~7">
+						</div>
+					</div>
+				</form>
+				<form class="form-horizontal" role="form"></form>
+					
+					<div class="form-group">
+
+						<label style="text-align:right" for="lastname" class="col-sm-5 control-label">Date: </label>
+						<form role="form"  class="col-sm-7 form-inline">
+								<div class="form-group">
+									<select class="form-control form-control-xxx" id="year" onchange="setMonth()"></select>
+									<label>year</label>
+									<select class="form-control form-control-xxx" id="month" onchange="setDay()"></select>
+									<label>month</label>
+									<select class="form-control form-control-xxx" id="day"></select>
+									<label>day</label>
+								</div>
+						</form>
+					</div>
+					<div class="clearfix" style="margin-bottom: 10px;"></div>
+					<div class="form-group">
+
+						<label style="text-align:right" for="lastname" class="col-sm-5 control-label">Arrival Time: </label>
+						<form role="form"  class="col-sm-7 form-inline">
+								<div class="form-group">
+									<select class="form-control form-control-xxx" id="arrival_hour" onchange="setArrival_min()">
+									<option >--</option>
+									</select>
+									<label>:</label>
+									<select class="form-control form-control-xxx" id="arrival_min" onchange="setDeparture_hour()"></select>
+								</div>
+						</form>
+						</div>
+						<div class="clearfix" style="margin-bottom: 10px;"></div>
+					<div class="form-group">
+
+						<label style="text-align:right" for="lastname" class="col-sm-5 control-label">departure Time: </label>
+						<form role="form"  class="col-sm-7 form-inline">
+								<div class="form-group">
+										<select class="form-control form-control-xxx" id="departure_hour" onchange="setDeparture_min()">--</select>
+										<label>:</label>
+										<select class="form-control form-control-xxx" id="departure_min"></select>
+									</div>
+						</form>
+					</div>
+					<div class="clearfix" style="margin-bottom: 10px;"></div>
+
+					<div class="form-group">
+						<label style="text-align:right" for="lastname" class="col-sm-5 control-label">Staff Name: </label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="staff_name" placeholder="please input staff name">
+						</div>
+					</div>
+
+					<div class="clearfix" style="margin-bottom: 10px;"></div>
+					<div class="form-group">
+						<label style="text-align:right" for="lastname" class="col-sm-5 control-label">Staff Number: </label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="staff_number" placeholder="please input staff number">
+						</div>
+					</div>
+					<div class="clearfix" style="margin-bottom: 10px;"></div>
+					
+
+					<div class="form-group">
+						<label style="text-align:right" for="lastname" class="col-sm-5 control-label">Status: </label>
+						<div class="col-sm-7">
+								
+							<label class="radio-inline">
+								<input type="radio" name="optionsRadiosinline" id="optionsRadios0" value="In" checked onclick="ignoreDeparture_time()"> In
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="optionsRadiosinline" id="optionsRadios1"  value="Out" onclick="setDeparture_hour()">Out
+							</label>
+						</div>
+					</div>
+
+					
+	  
+				</form>
+			
+				
+			
+			</div>
+			
+
+
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					关闭
+				</button>
+				<button type="button" class="btn btn-primary" onclick="onClickAddRecord()">
+					提交更改
+				</button>
+			</div>
+
+
+
+
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="myMdodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+			</div>
+			<div class="modal-body">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-primary">提交更改</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
+
+
+
+<script>
+   $(function () { $('#myModal').modal('hide')});
+</script>
+</body>
+</html>
